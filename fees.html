@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fees | University Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle" aria-hidden="true">
+  <label for="sidebar-toggle" class="sidebar-backdrop" aria-label="Close menu"></label>
+
+  <div class="app-layout">
+    <aside class="sidebar" aria-label="Sidebar navigation">
+      <div class="sidebar-brand">
+        <img src="images/logo.png" alt="">
+        <span>Admin</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="index.html">Home</a>
+        <a href="students.html">Students</a>
+        <a href="faculty.html">Faculty</a>
+        <a href="courses.html">Courses</a>
+        <a href="attendance.html">Attendance</a>
+        <a href="exams.html">Exams</a>
+        <a href="fees.html" class="active">Fees</a>
+      </nav>
+    </aside>
+
+    <div class="app-main">
+      <header class="topbar">
+        <label for="sidebar-toggle" class="menu-toggle" aria-label="Open menu">&#9776;</label>
+        <a href="index.html" class="brand">
+          <img src="images/logo.png" alt="University logo" class="brand-mark">
+          <span>University Management</span>
+        </a>
+      </header>
+
+
+  <main class="page-content">
+    <div class="container">
+
+      <header class="page-header">
+        <h1>Fees &amp; Accounts Portal</h1>
+        <p class="subtitle">
+          Tuition breakdown, recurring installment records, hostel charges, and clearance status.
+        </p>
+        <p class="meta">Account holder: <strong>Ananya Sharma</strong> · Roll <strong>CSE21B001</strong></p>
+      </header>
+
+      <section class="metrics metrics-3" aria-label="Fee summary">
+        <article class="metric-card">
+          <span class="accent"></span>
+          <p class="label">Total Annual Fees</p>
+          <p class="value">₹1,45,000</p>
+          <p class="metric-note">AY 2025-26 · Tuition + Hostel + Lab</p>
+        </article>
+        <article class="metric-card">
+          <span class="accent mint"></span>
+          <p class="label">Paid Amount</p>
+          <p class="value">₹1,45,000</p>
+          <p class="metric-note"><span class="badge badge-green">No Pending Dues</span></p>
+        </article>
+        <article class="metric-card">
+          <span class="accent indigo"></span>
+          <p class="label">Accounts Clearance</p>
+          <p class="value value-sm">Full Clearance Granted</p>
+          <p class="metric-note"><span class="badge badge-blue">Eligible for Exams</span></p>
+        </article>
+      </section>
+
+      <section>
+        <h2 class="section-title">Fee Transaction History</h2>
+        <p class="section-desc">
+          Receipts generated for tuition, laboratory, library, and hostel / mess installments
+          during the current academic year.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Receipt ID</th>
+                <th scope="col">Description</th>
+                <th scope="col">Payment Date</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Payment Mode</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>RCPT-2025-1184</td>
+                <td>Odd Sem Tuition (Sem 6)</td>
+                <td>Aug 12, 2025</td>
+                <td>₹70,000</td>
+                <td>Net Banking</td>
+                <td><span class="badge badge-green">Paid</span></td>
+              </tr>
+              <tr>
+                <td>RCPT-2025-1249</td>
+                <td>Lab &amp; Library Fee</td>
+                <td>Aug 14, 2025</td>
+                <td>₹8,500</td>
+                <td>UPI</td>
+                <td><span class="badge badge-green">Paid</span></td>
+              </tr>
+              <tr>
+                <td>RCPT-2025-1310</td>
+                <td>Hostel / Mess Installment 1</td>
+                <td>Aug 20, 2025</td>
+                <td>₹32,000</td>
+                <td>UPI</td>
+                <td><span class="badge badge-green">Paid</span></td>
+              </tr>
+              <tr>
+                <td>RCPT-2025-1488</td>
+                <td>Hostel / Mess Installment 2</td>
+                <td>Oct 05, 2025</td>
+                <td>₹32,000</td>
+                <td>Net Banking</td>
+                <td><span class="badge badge-green">Paid</span></td>
+              </tr>
+              <tr>
+                <td>RCPT-2025-1562</td>
+                <td>Examination &amp; Form Fee</td>
+                <td>Oct 22, 2025</td>
+                <td>₹2,500</td>
+                <td>DD</td>
+                <td><span class="badge badge-green">Paid</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="action-bar" aria-label="Fee documents">
+        <div class="action-bar-copy">
+          <h2>Documents &amp; Downloads</h2>
+          <p>
+            Clearance certificate and consolidated receipts are available once all dues
+            are settled. Buttons below are UI mockups for the demo portal.
+          </p>
+        </div>
+        <div class="action-bar-actions">
+          <button type="button" class="btn btn-primary btn-static" disabled>
+            Download Fee Clearance Certificate (PDF)
+          </button>
+          <button type="button" class="btn btn-secondary btn-static" disabled>
+            Print All Receipts
+          </button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <h4>Department of Computer Science &amp; Engineering</h4>
+        <p>University Management System - Academic Year 2025-26</p>
+      </div>
+      <div class="footer-meta">
+        <h4>Group Submission</h4>
+        <p>Full-Stack Mini Project - Team 01</p>
+        <p>Static frontend demo for academic evaluation</p>
+      </div>
+    </div>
+  </footer>
+
+    </div>
+  </div>
+
+</body>
+</html>

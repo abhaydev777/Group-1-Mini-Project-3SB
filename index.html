@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home | University Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle" aria-hidden="true">
+  <label for="sidebar-toggle" class="sidebar-backdrop" aria-label="Close menu"></label>
+
+  <div class="app-layout">
+    <aside class="sidebar" aria-label="Sidebar navigation">
+      <div class="sidebar-brand">
+        <img src="images/logo.png" alt="">
+        <span>Admin</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="students.html">Students</a>
+        <a href="faculty.html">Faculty</a>
+        <a href="courses.html">Courses</a>
+        <a href="attendance.html">Attendance</a>
+        <a href="exams.html">Exams</a>
+        <a href="fees.html">Fees</a>
+      </nav>
+    </aside>
+
+    <div class="app-main">
+      <header class="topbar">
+        <label for="sidebar-toggle" class="menu-toggle" aria-label="Open menu">&#9776;</label>
+        <a href="index.html" class="brand">
+          <img src="images/logo.png" alt="University logo" class="brand-mark">
+          <span>University Management</span>
+        </a>
+      </header>
+
+
+  <main class="page-content">
+    <div class="container">
+
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="hero-notice">Odd Semester 2025-26 - Week 6 in progress</span>
+          <h1>Welcome to the University Management System</h1>
+          <p>
+            A centralized academic portal for student records, faculty directories,
+            course catalogues, and attendance tracking - designed for clarity and
+            everyday campus use.
+          </p>
+          <div class="hero-actions">
+            <a href="students.html" class="btn btn-primary">View Students</a>
+            <a href="attendance.html" class="btn btn-secondary">Check Attendance</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <img src="images/campus-hero.jpg" alt="University campus buildings on a sunny day">
+        </div>
+      </section>
+
+      <section class="week-strip" aria-label="This week highlights">
+        <h3>This Week</h3>
+        <div class="week-grid">
+          <article class="week-item">
+            <p class="week-label">Registration</p>
+            <p class="week-text">Mid-term registration closes Friday</p>
+          </article>
+          <article class="week-item">
+            <p class="week-label">Faculty</p>
+            <p class="week-text">Department meeting - Thu, 3:00 PM</p>
+          </article>
+          <article class="week-item">
+            <p class="week-label">Electives</p>
+            <p class="week-text">Add/drop window ends next Monday</p>
+          </article>
+          <article class="week-item">
+            <p class="week-label">Campus</p>
+            <p class="week-text">Library hours extended till 10 PM</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="Key statistics">
+        <article class="metric-card">
+          <span class="accent"></span>
+          <p class="label">Total Students</p>
+          <p class="value">1,240</p>
+        </article>
+        <article class="metric-card">
+          <span class="accent indigo"></span>
+          <p class="label">Faculty Members</p>
+          <p class="value">86</p>
+        </article>
+        <article class="metric-card">
+          <span class="accent mint"></span>
+          <p class="label">Active Courses</p>
+          <p class="value">42</p>
+        </article>
+        <article class="metric-card">
+          <span class="accent slate"></span>
+          <p class="label">Avg. Attendance</p>
+          <p class="value">88%</p>
+        </article>
+      </section>
+
+      <section>
+        <h2 class="section-title">Quick Access</h2>
+        <p class="section-desc">Jump into any module to manage academic records and day-to-day operations.</p>
+
+        <div class="feature-grid">
+          <a href="students.html" class="feature-card">
+            <div class="feature-image">
+              <img src="images/feature-students.jpg" alt="Students collaborating on campus">
+            </div>
+            <div class="feature-body">
+              <h3>Student Records</h3>
+              <p>Browse enrolled students, roll numbers, branch details, and academic standing at a glance.</p>
+              <span class="link">Open Students ?</span>
+            </div>
+          </a>
+          <a href="faculty.html" class="feature-card">
+            <div class="feature-image">
+              <img src="images/feature-faculty.jpg" alt="Faculty teaching in a lecture hall">
+            </div>
+            <div class="feature-body">
+              <h3>Faculty Directory</h3>
+              <p>Find professors by department, specialization, cabin number, and contact email.</p>
+              <span class="link">Open Faculty ?</span>
+            </div>
+          </a>
+          <a href="courses.html" class="feature-card">
+            <div class="feature-image">
+              <img src="images/feature-courses.jpg" alt="Open books and study materials">
+            </div>
+            <div class="feature-body">
+              <h3>Course Catalogue</h3>
+              <p>Explore core subjects and open electives with credits, faculty assignment, and syllabus notes.</p>
+              <span class="link">Open Courses ?</span>
+            </div>
+          </a>
+          <a href="attendance.html" class="feature-card">
+            <div class="feature-image">
+              <img src="images/feature-attendance.jpg" alt="Student taking notes during a lecture">
+            </div>
+            <div class="feature-body">
+              <h3>Attendance Overview</h3>
+              <p>Track class participation, percentage tallies, and eligibility status against the 75% rule.</p>
+              <span class="link">Open Attendance ?</span>
+            </div>
+          </a>
+          <a href="exams.html" class="feature-card">
+            <div class="feature-image">
+              <img src="images/attendance-banner.jpg" alt="Student preparing for end-term examinations">
+            </div>
+            <div class="feature-body">
+              <h3>Examination Portal</h3>
+              <p>View end-term timetables, hall ticket status, exam centers, and official guidelines.</p>
+              <span class="link">Open Exams ?</span>
+            </div>
+          </a>
+          <a href="fees.html" class="feature-card">
+            <div class="feature-image">
+              <img src="images/campus-hero.jpg" alt="Campus accounts and fee services building">
+            </div>
+            <div class="feature-body">
+              <h3>Fees &amp; Accounts</h3>
+              <p>Check tuition dues, installment receipts, hostel charges, and clearance eligibility.</p>
+              <span class="link">Open Fees ?</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <h4>Department of Computer Science &amp; Engineering</h4>
+        <p>University Management System - Academic Year 2025-26</p>
+      </div>
+      <div class="footer-meta">
+        <h4>Group Submission</h4>
+        <p>Full-Stack Mini Project - Team 01</p>
+        <p>Static frontend demo for academic evaluation</p>
+      </div>
+    </div>
+  </footer>
+
+    </div>
+  </div>
+
+</body>
+</html>

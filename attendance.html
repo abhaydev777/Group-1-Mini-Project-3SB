@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance | University Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle" aria-hidden="true">
+  <label for="sidebar-toggle" class="sidebar-backdrop" aria-label="Close menu"></label>
+
+  <div class="app-layout">
+    <aside class="sidebar" aria-label="Sidebar navigation">
+      <div class="sidebar-brand">
+        <img src="images/logo.png" alt="">
+        <span>Admin</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="index.html">Home</a>
+        <a href="students.html">Students</a>
+        <a href="faculty.html">Faculty</a>
+        <a href="courses.html">Courses</a>
+        <a href="attendance.html" class="active">Attendance</a>
+        <a href="exams.html">Exams</a>
+        <a href="fees.html">Fees</a>
+      </nav>
+    </aside>
+
+    <div class="app-main">
+      <header class="topbar">
+        <label for="sidebar-toggle" class="menu-toggle" aria-label="Open menu">&#9776;</label>
+        <a href="index.html" class="brand">
+          <img src="images/logo.png" alt="University logo" class="brand-mark">
+          <span>University Management</span>
+        </a>
+      </header>
+
+
+  <main class="page-content">
+    <div class="container">
+
+      <header class="page-header">
+        <h1>Attendance Overview</h1>
+        <p class="subtitle">
+          Department-wide attendance summary for the current semester. Eligibility for
+          end-semester examinations depends on meeting the minimum attendance threshold.
+        </p>
+      </header>
+
+      <section class="highlight-box with-image" aria-label="Attendance criteria">
+        <div class="highlight-content">
+          <h2>Department Attendance Policy</h2>
+          <p>
+            Students must maintain consistent participation across all registered courses.
+            Attendance is calculated from the first day of instruction through the last
+            teaching day before examinations. Medical leave must be documented and
+            approved by the departmental office within seven working days.
+          </p>
+          <p class="rule">Minimum requirement: 75% overall attendance to remain exam-eligible.</p>
+        </div>
+        <div class="highlight-image">
+          <img src="images/attendance-banner.jpg" alt="Student reviewing notes and academic records">
+        </div>
+      </section>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Student Roll No</th>
+              <th scope="col">Student Name</th>
+              <th scope="col">Total Classes Held</th>
+              <th scope="col">Classes Attended</th>
+              <th scope="col">Attendance %</th>
+              <th scope="col">Eligibility Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CSE21B001</td>
+              <td>
+                <div class="person-cell">
+                  <img class="person-thumb" src="images/student-1.jpg" alt="">
+                  <span>Ananya Sharma</span>
+                </div>
+              </td>
+              <td>48</td>
+              <td>46</td>
+              <td>95.8%</td>
+              <td><span class="badge badge-green">Eligible</span></td>
+            </tr>
+            <tr>
+              <td>CSE21B014</td>
+              <td>
+                <div class="person-cell">
+                  <img class="person-thumb" src="images/student-2.jpg" alt="">
+                  <span>Rahul Mehta</span>
+                </div>
+              </td>
+              <td>48</td>
+              <td>41</td>
+              <td>85.4%</td>
+              <td><span class="badge badge-green">Eligible</span></td>
+            </tr>
+            <tr>
+              <td>ECE22B008</td>
+              <td>
+                <div class="person-cell">
+                  <img class="person-thumb" src="images/student-3.jpg" alt="">
+                  <span>Priya Nair</span>
+                </div>
+              </td>
+              <td>45</td>
+              <td>39</td>
+              <td>86.7%</td>
+              <td><span class="badge badge-green">Eligible</span></td>
+            </tr>
+            <tr>
+              <td>CSE22B032</td>
+              <td>
+                <div class="person-cell">
+                  <img class="person-thumb" src="images/student-4.jpg" alt="">
+                  <span>Arjun Patel</span>
+                </div>
+              </td>
+              <td>48</td>
+              <td>33</td>
+              <td>68.8%</td>
+              <td><span class="badge badge-red">Shortage Alert</span></td>
+            </tr>
+            <tr>
+              <td>IT21B019</td>
+              <td>
+                <div class="person-cell">
+                  <img class="person-thumb" src="images/student-5.jpg" alt="">
+                  <span>Sneha Reddy</span>
+                </div>
+              </td>
+              <td>46</td>
+              <td>43</td>
+              <td>93.5%</td>
+              <td><span class="badge badge-green">Eligible</span></td>
+            </tr>
+            <tr>
+              <td>CSE23B045</td>
+              <td>
+                <div class="person-cell">
+                  <img class="person-thumb" src="images/student-6.jpg" alt="">
+                  <span>Vikram Singh</span>
+                </div>
+              </td>
+              <td>42</td>
+              <td>30</td>
+              <td>71.4%</td>
+              <td><span class="badge badge-red">Shortage Alert</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <h4>Department of Computer Science &amp; Engineering</h4>
+        <p>University Management System - Academic Year 2025-26</p>
+      </div>
+      <div class="footer-meta">
+        <h4>Group Submission</h4>
+        <p>Full-Stack Mini Project - Team 01</p>
+        <p>Static frontend demo for academic evaluation</p>
+      </div>
+    </div>
+  </footer>
+
+    </div>
+  </div>
+
+</body>
+</html>

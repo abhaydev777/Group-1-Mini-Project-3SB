@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Students | University Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle" aria-hidden="true">
+  <label for="sidebar-toggle" class="sidebar-backdrop" aria-label="Close menu"></label>
+
+  <div class="app-layout">
+    <aside class="sidebar" aria-label="Sidebar navigation">
+      <div class="sidebar-brand">
+        <img src="images/logo.png" alt="">
+        <span>Admin</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="index.html">Home</a>
+        <a href="students.html" class="active">Students</a>
+        <a href="faculty.html">Faculty</a>
+        <a href="courses.html">Courses</a>
+        <a href="attendance.html">Attendance</a>
+        <a href="exams.html">Exams</a>
+        <a href="fees.html">Fees</a>
+      </nav>
+    </aside>
+
+    <div class="app-main">
+      <header class="topbar">
+        <label for="sidebar-toggle" class="menu-toggle" aria-label="Open menu">&#9776;</label>
+        <a href="index.html" class="brand">
+          <img src="images/logo.png" alt="University logo" class="brand-mark">
+          <span>University Management</span>
+        </a>
+      </header>
+
+
+  <main class="page-content">
+    <div class="container">
+
+      <header class="page-header">
+        <h1>Student Records</h1>
+        <p class="subtitle">
+          Complete roster of currently enrolled undergraduates with branch placement,
+          contact details, and academic standing for the Odd Semester 2025-26.
+        </p>
+        <p class="meta">Showing <strong>6</strong> of <strong>1,240</strong> registered students</p>
+      </header>
+
+      <div class="page-banner">
+        <img src="images/students-banner.jpg" alt="University graduation ceremony with students">
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Roll Number</th>
+              <th scope="col">Full Name</th>
+              <th scope="col">Branch / Semester</th>
+              <th scope="col">Email Address</th>
+              <th scope="col">Academic Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CSE21B001</td>
+              <td>
+                <div class="person-cell">
+                  <img class="person-thumb" src="images/student-1.jpg" alt="">
+                  <span>Ananya Sharma</span>
+                </div>
+              </td>
+              <td>CSE - Sem 6</td>
+              <td>ananya.sharma@uni.edu</td>
+              <td><span class="badge badge-green">Dean's List</span></td>
+            </tr>
+            <tr>
+              <td>CSE21B014</td>
+              <td>
+                <div class="person-cell">
+                  <img class="person-thumb" src="images/student-2.jpg" alt="">
+                  <span>Rahul Mehta</span>
+                </div>
+              </td>
+              <td>CSE - Sem 6</td>
+              <td>rahul.mehta@uni.edu</td>
+              <td><span class="badge badge-blue">Regular</span></td>
+            </tr>
+            <tr>
+              <td>ECE22B008</td>
+              <td>
+                <div class="person-cell">
+                  <img class="person-thumb" src="images/student-3.jpg" alt="">
+                  <span>Priya Nair</span>
+                </div>
+              </td>
+              <td>ECE - Sem 4</td>
+              <td>priya.nair@uni.edu</td>
+              <td><span class="badge badge-blue">Regular</span></td>
+            </tr>
+            <tr>
+              <td>CSE22B032</td>
+              <td>
+                <div class="person-cell">
+                  <img class="person-thumb" src="images/student-4.jpg" alt="">
+                  <span>Arjun Patel</span>
+                </div>
+              </td>
+              <td>CSE - Sem 4</td>
+              <td>arjun.patel@uni.edu</td>
+              <td><span class="badge badge-amber">Pending</span></td>
+            </tr>
+            <tr>
+              <td>IT21B019</td>
+              <td>
+                <div class="person-cell">
+                  <img class="person-thumb" src="images/student-5.jpg" alt="">
+                  <span>Sneha Reddy</span>
+                </div>
+              </td>
+              <td>IT - Sem 6</td>
+              <td>sneha.reddy@uni.edu</td>
+              <td><span class="badge badge-green">Dean's List</span></td>
+            </tr>
+            <tr>
+              <td>CSE23B045</td>
+              <td>
+                <div class="person-cell">
+                  <img class="person-thumb" src="images/student-6.jpg" alt="">
+                  <span>Vikram Singh</span>
+                </div>
+              </td>
+              <td>CSE - Sem 2</td>
+              <td>vikram.singh@uni.edu</td>
+              <td><span class="badge badge-blue">Regular</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <h4>Department of Computer Science &amp; Engineering</h4>
+        <p>University Management System - Academic Year 2025-26</p>
+      </div>
+      <div class="footer-meta">
+        <h4>Group Submission</h4>
+        <p>Full-Stack Mini Project - Team 01</p>
+        <p>Static frontend demo for academic evaluation</p>
+      </div>
+    </div>
+  </footer>
+
+    </div>
+  </div>
+
+</body>
+</html>
