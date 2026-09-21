@@ -8,13 +8,16 @@
 </head>
 <body>
 
-  <header class="navbar">
-    <div class="container">
-      <a href="index.html" class="brand">
-        <span class="brand-mark">UMS</span>
-        <span>University Management</span>
-      </a>
-      <nav class="nav-links" aria-label="Main navigation">
+  <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle" aria-hidden="true">
+  <label for="sidebar-toggle" class="sidebar-backdrop" aria-label="Close menu"></label>
+
+  <div class="app-layout">
+    <aside class="sidebar" aria-label="Sidebar navigation">
+      <div class="sidebar-brand">
+        <img src="images/logo.png" alt="">
+        <span>Admin</span>
+      </div>
+      <nav class="sidebar-nav">
         <a href="index.html">Home</a>
         <a href="students.html">Students</a>
         <a href="faculty.html">Faculty</a>
@@ -23,8 +26,17 @@
         <a href="exams.html" class="active">Exams</a>
         <a href="fees.html">Fees</a>
       </nav>
-    </div>
-  </header>
+    </aside>
+
+    <div class="app-main">
+      <header class="topbar">
+        <label for="sidebar-toggle" class="menu-toggle" aria-label="Open menu">&#9776;</label>
+        <a href="index.html" class="brand">
+          <img src="images/logo.png" alt="University logo" class="brand-mark">
+          <span>University Management</span>
+        </a>
+      </header>
+
 
   <main class="page-content">
     <div class="container">
@@ -32,13 +44,114 @@
       <header class="page-header">
         <h1>Examinations &amp; Schedules</h1>
         <p class="subtitle">
-          Semester examinations, date sheets, hall tickets, and grade distributions.
+          Odd Semester 2025-26 end-term examination timetables, hall ticket status, and guidelines.
         </p>
       </header>
 
-      <section class="placeholder-card">
-        <p class="placeholder-desc">This module is under development.</p>
-        <p class="assigned-badge">Assigned to: Team Member 3 (Abhishek Tomar) &amp; Team Member 4 (Abhishek Yadav)</p>
+      <section class="metrics metrics-3" aria-label="Examination highlights">
+        <article class="metric-card">
+          <span class="accent"></span>
+          <p class="label">Next Exam</p>
+          <p class="value value-sm">Operating Systems (CS-301) — Nov 18, 2025</p>
+        </article>
+        <article class="metric-card">
+          <span class="accent mint"></span>
+          <p class="label">Admit Card Status</p>
+          <p class="value value-sm">Approved &amp; Released</p>
+          <p class="metric-note"><span class="badge badge-green">Ready to Download</span></p>
+        </article>
+        <article class="metric-card">
+          <span class="accent indigo"></span>
+          <p class="label">Examination Center</p>
+          <p class="value value-sm">Block C, Main Examination Hall</p>
+        </article>
+      </section>
+
+      <section>
+        <h2 class="section-title">End-Term Exam Timetable</h2>
+        <p class="section-desc">
+          Official date sheet for registered courses. Arrive at the allotted room at least
+          30 minutes before the shift begins.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Date &amp; Day</th>
+                <th scope="col">Shift / Time</th>
+                <th scope="col">Course Code</th>
+                <th scope="col">Subject Title</th>
+                <th scope="col">Room No</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Nov 18, 2025 · Tuesday</td>
+                <td>Morning · 09:30 – 12:30</td>
+                <td>CS-301</td>
+                <td>Operating Systems</td>
+                <td>C-101</td>
+                <td><span class="badge badge-blue">Upcoming</span></td>
+              </tr>
+              <tr>
+                <td>Nov 20, 2025 · Thursday</td>
+                <td>Morning · 09:30 – 12:30</td>
+                <td>CS-302</td>
+                <td>Database Management Systems</td>
+                <td>C-104</td>
+                <td><span class="badge badge-blue">Upcoming</span></td>
+              </tr>
+              <tr>
+                <td>Nov 22, 2025 · Saturday</td>
+                <td>Afternoon · 14:00 – 17:00</td>
+                <td>CS-303</td>
+                <td>Computer Networks</td>
+                <td>C-201</td>
+                <td><span class="badge badge-blue">Upcoming</span></td>
+              </tr>
+              <tr>
+                <td>Oct 28, 2025 · Tuesday</td>
+                <td>Morning · 09:30 – 12:30</td>
+                <td>EC-204</td>
+                <td>Digital Electronics</td>
+                <td>B-112</td>
+                <td><span class="badge badge-gray">Completed</span></td>
+              </tr>
+              <tr>
+                <td>Oct 30, 2025 · Thursday</td>
+                <td>Afternoon · 14:00 – 17:00</td>
+                <td>MA-301</td>
+                <td>Discrete Mathematics</td>
+                <td>A-205</td>
+                <td><span class="badge badge-gray">Completed</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="alert-box" aria-label="Examination guidelines">
+        <h2>Examination Guidelines &amp; Regulations</h2>
+        <p class="alert-intro">
+          All candidates must comply with the following rules. Violations may result in
+          cancellation of the paper and disciplinary action.
+        </p>
+        <ul class="alert-list">
+          <li>
+            <strong>Valid ID mandatory:</strong> Carry your university identity card and
+            printed / digital admit card. Entry will be denied without both documents.
+          </li>
+          <li>
+            <strong>Entry closes 15 minutes prior:</strong> Gates shut at the published
+            start time minus 15 minutes. Late arrivals will not be admitted under any circumstances.
+          </li>
+          <li>
+            <strong>No electronic devices:</strong> Mobiles, smartwatches, calculators
+            (unless explicitly permitted), and earphones are prohibited inside the hall.
+          </li>
+        </ul>
       </section>
 
     </div>
@@ -57,6 +170,9 @@
       </div>
     </div>
   </footer>
+
+    </div>
+  </div>
 
 </body>
 </html>

@@ -8,13 +8,16 @@
 </head>
 <body>
 
-  <header class="navbar">
-    <div class="container">
-      <a href="index.html" class="brand">
-        <span class="brand-mark">UMS</span>
-        <span>University Management</span>
-      </a>
-      <nav class="nav-links" aria-label="Main navigation">
+  <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle" aria-hidden="true">
+  <label for="sidebar-toggle" class="sidebar-backdrop" aria-label="Close menu"></label>
+
+  <div class="app-layout">
+    <aside class="sidebar" aria-label="Sidebar navigation">
+      <div class="sidebar-brand">
+        <img src="images/logo.png" alt="">
+        <span>Admin</span>
+      </div>
+      <nav class="sidebar-nav">
         <a href="index.html">Home</a>
         <a href="students.html">Students</a>
         <a href="faculty.html">Faculty</a>
@@ -23,8 +26,17 @@
         <a href="exams.html">Exams</a>
         <a href="fees.html">Fees</a>
       </nav>
-    </div>
-  </header>
+    </aside>
+
+    <div class="app-main">
+      <header class="topbar">
+        <label for="sidebar-toggle" class="menu-toggle" aria-label="Open menu">&#9776;</label>
+        <a href="index.html" class="brand">
+          <img src="images/logo.png" alt="University logo" class="brand-mark">
+          <span>University Management</span>
+        </a>
+      </header>
+
 
   <main class="page-content">
     <div class="container">
@@ -32,13 +44,149 @@
       <header class="page-header">
         <h1>Course Catalogue</h1>
         <p class="subtitle">
-          Core subjects, open electives, credit details, and faculty assignments.
+          Browse the Odd Semester 2025-26 offerings. Core department subjects are
+          mandatory for the programme; open electives may be chosen as per credit rules.
         </p>
       </header>
 
-      <section class="placeholder-card">
-        <p class="placeholder-desc">This module is under development.</p>
-        <p class="assigned-badge">Assigned to: Team Member 2 (Abhishek)</p>
+      <section class="course-section">
+        <h2>Core Department Subjects</h2>
+        <p class="section-desc">Required courses for Computer Science &amp; Engineering undergraduates.</p>
+
+        <div class="course-grid">
+          <article class="course-card">
+            <div class="course-image">
+              <img src="images/course-os.jpg" alt="Laptop with code editor open">
+            </div>
+            <div class="course-body">
+              <span class="course-code">CS-301</span>
+              <h3>Operating Systems</h3>
+              <div class="course-meta">
+                <p><span>4 Credits</span></p>
+                <p>Faculty: <span>Dr. Rajesh Kumar</span></p>
+              </div>
+              <p class="syllabus">
+                Process management, scheduling algorithms, memory allocation, virtual memory,
+                and file-system design with hands-on lab exercises on Linux.
+              </p>
+            </div>
+          </article>
+
+          <article class="course-card">
+            <div class="course-image">
+              <img src="images/course-db.jpg" alt="Code on a computer screen">
+            </div>
+            <div class="course-body">
+              <span class="course-code">CS-302</span>
+              <h3>Database Management Systems</h3>
+              <div class="course-meta">
+                <p><span>4 Credits</span></p>
+                <p>Faculty: <span>Dr. Meera Gupta</span></p>
+              </div>
+              <p class="syllabus">
+                Relational modelling, SQL, normalization, transactions, and indexing.
+                Includes a mini-project building a normalized schema for a campus app.
+              </p>
+            </div>
+          </article>
+
+          <article class="course-card">
+            <div class="course-image">
+              <img src="images/course-networks.jpg" alt="Network server room cables">
+            </div>
+            <div class="course-body">
+              <span class="course-code">CS-303</span>
+              <h3>Computer Networks</h3>
+              <div class="course-meta">
+                <p><span>3 Credits</span></p>
+                <p>Faculty: <span>Prof. Suresh Desai</span></p>
+              </div>
+              <p class="syllabus">
+                OSI and TCP/IP stacks, routing protocols, congestion control, and network
+                security fundamentals with packet-capture lab sessions.
+              </p>
+            </div>
+          </article>
+
+          <article class="course-card">
+            <div class="course-image">
+              <img src="images/course-algo.jpg" alt="Abstract data and algorithm visualization">
+            </div>
+            <div class="course-body">
+              <span class="course-code">CS-304</span>
+              <h3>Design &amp; Analysis of Algorithms</h3>
+              <div class="course-meta">
+                <p><span>4 Credits</span></p>
+                <p>Faculty: <span>Dr. Rajesh Kumar</span></p>
+              </div>
+              <p class="syllabus">
+                Divide-and-conquer, dynamic programming, greedy methods, graph algorithms,
+                and asymptotic complexity analysis through programming assignments.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="course-section">
+        <h2>Open Electives</h2>
+        <p class="section-desc">Optional subjects available across departments - pick based on interest and seat availability.</p>
+
+        <div class="course-grid">
+          <article class="course-card">
+            <div class="course-image">
+              <img src="images/course-ml.jpg" alt="Artificial intelligence and machine learning concept">
+            </div>
+            <div class="course-body">
+              <span class="course-code">CS-351</span>
+              <h3>Introduction to Machine Learning</h3>
+              <div class="course-meta">
+                <p><span>3 Credits</span></p>
+                <p>Faculty: <span>Dr. Aisha Iyer</span></p>
+              </div>
+              <p class="syllabus">
+                Supervised and unsupervised learning, model evaluation, and a practical
+                project using Python libraries for classification and regression tasks.
+              </p>
+            </div>
+          </article>
+
+          <article class="course-card">
+            <div class="course-image">
+              <img src="images/course-cloud.jpg" alt="Earth from space representing cloud computing">
+            </div>
+            <div class="course-body">
+              <span class="course-code">IT-340</span>
+              <h3>Cloud Computing Fundamentals</h3>
+              <div class="course-meta">
+                <p><span>3 Credits</span></p>
+                <p>Faculty: <span>Prof. Suresh Desai</span></p>
+              </div>
+              <p class="syllabus">
+                Virtualization, IaaS/PaaS/SaaS models, container basics, and deploying a
+                simple web service on a public cloud platform.
+              </p>
+            </div>
+          </article>
+
+          <article class="course-card">
+            <div class="course-image">
+              <img src="images/course-iot.jpg" alt="Circuit board and electronics hardware">
+            </div>
+            <div class="course-body">
+              <span class="course-code">EC-325</span>
+              <h3>Internet of Things</h3>
+              <div class="course-meta">
+                <p><span>3 Credits</span></p>
+                <p>Faculty: <span>Prof. Nikhil Verma</span></p>
+              </div>
+              <p class="syllabus">
+                Sensor networks, microcontroller programming, MQTT protocols, and building
+                a prototype smart-campus monitoring node.
+              </p>
+            </div>
+          </article>
+        </div>
       </section>
 
     </div>
@@ -57,6 +205,9 @@
       </div>
     </div>
   </footer>
+
+    </div>
+  </div>
 
 </body>
 </html>

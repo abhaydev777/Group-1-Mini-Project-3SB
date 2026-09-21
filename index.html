@@ -8,13 +8,16 @@
 </head>
 <body>
 
-  <header class="navbar">
-    <div class="container">
-      <a href="index.html" class="brand">
-        <span class="brand-mark">UMS</span>
-        <span>University Management</span>
-      </a>
-      <nav class="nav-links" aria-label="Main navigation">
+  <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle" aria-hidden="true">
+  <label for="sidebar-toggle" class="sidebar-backdrop" aria-label="Close menu"></label>
+
+  <div class="app-layout">
+    <aside class="sidebar" aria-label="Sidebar navigation">
+      <div class="sidebar-brand">
+        <img src="images/logo.png" alt="">
+        <span>Admin</span>
+      </div>
+      <nav class="sidebar-nav">
         <a href="index.html" class="active">Home</a>
         <a href="students.html">Students</a>
         <a href="faculty.html">Faculty</a>
@@ -23,8 +26,17 @@
         <a href="exams.html">Exams</a>
         <a href="fees.html">Fees</a>
       </nav>
-    </div>
-  </header>
+    </aside>
+
+    <div class="app-main">
+      <header class="topbar">
+        <label for="sidebar-toggle" class="menu-toggle" aria-label="Open menu">&#9776;</label>
+        <a href="index.html" class="brand">
+          <img src="images/logo.png" alt="University logo" class="brand-mark">
+          <span>University Management</span>
+        </a>
+      </header>
+
 
   <main class="page-content">
     <div class="container">
@@ -138,6 +150,26 @@
               <span class="link">Open Attendance ?</span>
             </div>
           </a>
+          <a href="exams.html" class="feature-card">
+            <div class="feature-image">
+              <img src="images/attendance-banner.jpg" alt="Student preparing for end-term examinations">
+            </div>
+            <div class="feature-body">
+              <h3>Examination Portal</h3>
+              <p>View end-term timetables, hall ticket status, exam centers, and official guidelines.</p>
+              <span class="link">Open Exams ?</span>
+            </div>
+          </a>
+          <a href="fees.html" class="feature-card">
+            <div class="feature-image">
+              <img src="images/campus-hero.jpg" alt="Campus accounts and fee services building">
+            </div>
+            <div class="feature-body">
+              <h3>Fees &amp; Accounts</h3>
+              <p>Check tuition dues, installment receipts, hostel charges, and clearance eligibility.</p>
+              <span class="link">Open Fees ?</span>
+            </div>
+          </a>
         </div>
       </section>
 
@@ -157,6 +189,9 @@
       </div>
     </div>
   </footer>
+
+    </div>
+  </div>
 
 </body>
 </html>

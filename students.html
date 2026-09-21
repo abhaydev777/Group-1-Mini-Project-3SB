@@ -8,13 +8,16 @@
 </head>
 <body>
 
-  <header class="navbar">
-    <div class="container">
-      <a href="index.html" class="brand">
-        <span class="brand-mark">UMS</span>
-        <span>University Management</span>
-      </a>
-      <nav class="nav-links" aria-label="Main navigation">
+  <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle" aria-hidden="true">
+  <label for="sidebar-toggle" class="sidebar-backdrop" aria-label="Close menu"></label>
+
+  <div class="app-layout">
+    <aside class="sidebar" aria-label="Sidebar navigation">
+      <div class="sidebar-brand">
+        <img src="images/logo.png" alt="">
+        <span>Admin</span>
+      </div>
+      <nav class="sidebar-nav">
         <a href="index.html">Home</a>
         <a href="students.html" class="active">Students</a>
         <a href="faculty.html">Faculty</a>
@@ -23,8 +26,17 @@
         <a href="exams.html">Exams</a>
         <a href="fees.html">Fees</a>
       </nav>
-    </div>
-  </header>
+    </aside>
+
+    <div class="app-main">
+      <header class="topbar">
+        <label for="sidebar-toggle" class="menu-toggle" aria-label="Open menu">&#9776;</label>
+        <a href="index.html" class="brand">
+          <img src="images/logo.png" alt="University logo" class="brand-mark">
+          <span>University Management</span>
+        </a>
+      </header>
+
 
   <main class="page-content">
     <div class="container">
@@ -146,6 +158,9 @@
       </div>
     </div>
   </footer>
+
+    </div>
+  </div>
 
 </body>
 </html>
