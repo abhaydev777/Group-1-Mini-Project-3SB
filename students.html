@@ -47,11 +47,33 @@
           Complete roster of currently enrolled undergraduates with branch placement,
           contact details, and academic standing for the Odd Semester 2025-26.
         </p>
-        <p class="meta">Showing <strong>6</strong> of <strong>1,240</strong> registered students</p>
+        <p class="meta" id="headerCountMeta">Showing <strong>6</strong> of <strong>6</strong> registered students</p>
       </header>
 
       <div class="page-banner">
         <img src="images/students-banner.jpg" alt="University graduation ceremony with students">
+      </div>
+
+      <div class="filter-bar">
+        <div class="filter-group">
+          <input type="text" id="studentSearch" placeholder="Search by name, roll no, or branch...">
+          <select id="branchFilter">
+            <option value="">All Branches</option>
+            <option value="CSE">CSE</option>
+            <option value="IT">IT</option>
+            <option value="ECE">ECE</option>
+          </select>
+          <select id="statusFilter">
+            <option value="">All Status</option>
+            <option value="Dean's List">Dean's List</option>
+            <option value="Regular">Regular</option>
+            <option value="Pending">Pending</option>
+          </select>
+        </div>
+        <div class="filter-actions">
+          <span id="studentCountLabel" class="student-count-label">Showing 6 of 6 registered students</span>
+          <button type="button" id="openAddModalBtn" class="btn-primary">+ Add Student</button>
+        </div>
       </div>
 
       <div class="table-wrap">
@@ -63,6 +85,7 @@
               <th scope="col">Branch / Semester</th>
               <th scope="col">Email Address</th>
               <th scope="col">Academic Status</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -76,7 +99,13 @@
               </td>
               <td>CSE - Sem 6</td>
               <td>ananya.sharma@uni.edu</td>
-              <td><span class="badge badge-green">Dean's List</span></td>
+              <td><span class="badge badge-green badge-deans">Dean's List</span></td>
+              <td>
+                <div class="action-buttons">
+                  <button type="button" class="btn-edit" data-roll="CSE21B001" title="Edit student">Edit</button>
+                  <button type="button" class="btn-delete" data-roll="CSE21B001" title="Remove student">Remove</button>
+                </div>
+              </td>
             </tr>
             <tr>
               <td>CSE21B014</td>
@@ -88,7 +117,13 @@
               </td>
               <td>CSE - Sem 6</td>
               <td>rahul.mehta@uni.edu</td>
-              <td><span class="badge badge-blue">Regular</span></td>
+              <td><span class="badge badge-blue badge-regular">Regular</span></td>
+              <td>
+                <div class="action-buttons">
+                  <button type="button" class="btn-edit" data-roll="CSE21B014" title="Edit student">Edit</button>
+                  <button type="button" class="btn-delete" data-roll="CSE21B014" title="Remove student">Remove</button>
+                </div>
+              </td>
             </tr>
             <tr>
               <td>ECE22B008</td>
@@ -100,7 +135,13 @@
               </td>
               <td>ECE - Sem 4</td>
               <td>priya.nair@uni.edu</td>
-              <td><span class="badge badge-blue">Regular</span></td>
+              <td><span class="badge badge-blue badge-regular">Regular</span></td>
+              <td>
+                <div class="action-buttons">
+                  <button type="button" class="btn-edit" data-roll="ECE22B008" title="Edit student">Edit</button>
+                  <button type="button" class="btn-delete" data-roll="ECE22B008" title="Remove student">Remove</button>
+                </div>
+              </td>
             </tr>
             <tr>
               <td>CSE22B032</td>
@@ -112,7 +153,13 @@
               </td>
               <td>CSE - Sem 4</td>
               <td>arjun.patel@uni.edu</td>
-              <td><span class="badge badge-amber">Pending</span></td>
+              <td><span class="badge badge-amber badge-pending">Pending</span></td>
+              <td>
+                <div class="action-buttons">
+                  <button type="button" class="btn-edit" data-roll="CSE22B032" title="Edit student">Edit</button>
+                  <button type="button" class="btn-delete" data-roll="CSE22B032" title="Remove student">Remove</button>
+                </div>
+              </td>
             </tr>
             <tr>
               <td>IT21B019</td>
@@ -124,7 +171,13 @@
               </td>
               <td>IT - Sem 6</td>
               <td>sneha.reddy@uni.edu</td>
-              <td><span class="badge badge-green">Dean's List</span></td>
+              <td><span class="badge badge-green badge-deans">Dean's List</span></td>
+              <td>
+                <div class="action-buttons">
+                  <button type="button" class="btn-edit" data-roll="IT21B019" title="Edit student">Edit</button>
+                  <button type="button" class="btn-delete" data-roll="IT21B019" title="Remove student">Remove</button>
+                </div>
+              </td>
             </tr>
             <tr>
               <td>CSE23B045</td>
@@ -136,7 +189,13 @@
               </td>
               <td>CSE - Sem 2</td>
               <td>vikram.singh@uni.edu</td>
-              <td><span class="badge badge-blue">Regular</span></td>
+              <td><span class="badge badge-blue badge-regular">Regular</span></td>
+              <td>
+                <div class="action-buttons">
+                  <button type="button" class="btn-edit" data-roll="CSE23B045" title="Edit student">Edit</button>
+                  <button type="button" class="btn-delete" data-roll="CSE23B045" title="Remove student">Remove</button>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -162,5 +221,56 @@
     </div>
   </div>
 
+  <!-- Add Student Modal -->
+  <div id="addStudentModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalTitle">Add New Student</h3>
+        <button type="button" class="modal-close-btn" id="closeModalBtn" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="addStudentForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="studentRoll">Roll Number</label>
+            <input type="text" id="studentRoll" required placeholder="e.g. CSE22B050">
+          </div>
+          <div class="form-group">
+            <label for="studentName">Full Name</label>
+            <input type="text" id="studentName" required placeholder="e.g. Rohan Sharma">
+          </div>
+          <div class="form-group avatar-upload-group">
+            <label for="studentAvatarInput">Profile Photo (Optional)</label>
+            <div class="avatar-preview-wrapper">
+              <img id="avatarPreview" src="images/avatar-default.png" alt="Preview" class="avatar-preview-img" style="display: none;">
+              <div id="avatarInitialsPreview" class="avatar-preview-placeholder">PIC</div>
+              <input type="file" id="studentAvatarInput" accept="image/*">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="studentBranch">Branch / Semester</label>
+            <input type="text" id="studentBranch" required placeholder="e.g. CSE - Sem 4">
+          </div>
+          <div class="form-group">
+            <label for="studentEmail">Email Address</label>
+            <input type="email" id="studentEmail" required placeholder="e.g. rohan.sharma@uni.edu">
+          </div>
+          <div class="form-group">
+            <label for="studentStatus">Academic Status</label>
+            <select id="studentStatus" required>
+              <option value="Regular">Regular</option>
+              <option value="Dean's List">Dean's List</option>
+              <option value="Pending">Pending</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelModalBtn">Cancel / Close</button>
+          <button type="submit" class="btn btn-primary" id="saveStudentBtn">Save Student</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/students.js"></script>
 </body>
 </html>
