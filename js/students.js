@@ -1,663 +1,230 @@
-/**
- * University Management System - Students Module
- * Pure Vanilla JavaScript implementation for:
- * - Dynamic table rendering from localStorage
- * - Real-time filtering across search input, branch, and academic status
- * - Full CRUD operations:
- *    - Create (Add Student modal with optional Base64 photo upload)
- *    - Read (Roster table rendering with image/initials avatars)
- *    - Update (Edit Student modal pre-filling and updating)
- *    - Delete (Remove button with localStorage sync)
- * - Modal management with image preview and state reset
- */
+// ==========================================
+// 1. DEFAULT DATA (Jab pehli baar page khule)
+// ==========================================
+const initialStudents = [
+  { roll: "CSE21B001", name: "Ananya Sharma", image: "images/student-1.jpg", branch: "CSE - Sem 6", email: "ananya.sharma@uni.edu", status: "Dean's List" },
+  { roll: "CSE21B014", name: "Rahul Mehta", image: "images/student-2.jpg", branch: "CSE - Sem 6", email: "rahul.mehta@uni.edu", status: "Regular" },
+  { roll: "ECE22B008", name: "Priya Nair", image: "images/student-3.jpg", branch: "ECE - Sem 4", email: "priya.nair@uni.edu", status: "Regular" },
+  { roll: "CSE22B032", name: "Arjun Patel", image: "images/student-4.jpg", branch: "CSE - Sem 4", email: "arjun.patel@uni.edu", status: "Pending" },
+  { roll: "IT21B019", name: "Sneha Reddy", image: "images/student-5.jpg", branch: "IT - Sem 6", email: "sneha.reddy@uni.edu", status: "Dean's List" },
+  { roll: "CSE23B045", name: "Vikram Singh", image: "images/student-6.jpg", branch: "CSE - Sem 2", email: "vikram.singh@uni.edu", status: "Regular" }
+];
 
-(function () {
-  'use strict';
+// LocalStorage check karo: agar data hai toh uthao, warna initial data daalo
+let students = JSON.parse(localStorage.getItem("ums_students"));
+if (!students) {
+  students = initialStudents;
+  localStorage.setItem("ums_students", JSON.stringify(students));
+}
 
-  var STORAGE_KEY = 'ums_students';
+// Edit tracking ke liye variable (null = Add mode, string = Edit mode)
+let editingRollNumber = null;
 
-  // Default 6 mock students representing existing university records
-  var DEFAULT_STUDENTS = [
-    {
-      roll: 'CSE21B001',
-      name: 'Ananya Sharma',
-      branch: 'CSE - Sem 6',
-      email: 'ananya.sharma@uni.edu',
-      status: "Dean's List",
-      avatar: 'images/student-1.jpg'
-    },
-    {
-      roll: 'CSE21B014',
-      name: 'Rahul Mehta',
-      branch: 'CSE - Sem 6',
-      email: 'rahul.mehta@uni.edu',
-      status: 'Regular',
-      avatar: 'images/student-2.jpg'
-    },
-    {
-      roll: 'ECE22B008',
-      name: 'Priya Nair',
-      branch: 'ECE - Sem 4',
-      email: 'priya.nair@uni.edu',
-      status: 'Regular',
-      avatar: 'images/student-3.jpg'
-    },
-    {
-      roll: 'CSE22B032',
-      name: 'Arjun Patel',
-      branch: 'CSE - Sem 4',
-      email: 'arjun.patel@uni.edu',
-      status: 'Pending',
-      avatar: 'images/student-4.jpg'
-    },
-    {
-      roll: 'IT21B019',
-      name: 'Sneha Reddy',
-      branch: 'IT - Sem 6',
-      email: 'sneha.reddy@uni.edu',
-      status: "Dean's List",
-      avatar: 'images/student-5.jpg'
-    },
-    {
-      roll: 'CSE23B045',
-      name: 'Vikram Singh',
-      branch: 'CSE - Sem 2',
-      email: 'vikram.singh@uni.edu',
-      status: 'Regular',
-      avatar: 'images/student-6.jpg'
-    }
-  ];
+// ==========================================
+// 2. DOM ELEMENTS SELECT KARNA
+// ==========================================
+const tableBody = document.querySelector("tbody");
+const searchInput = document.getElementById("studentSearch");
+const branchFilter = document.getElementById("branchFilter");
+const statusFilter = document.getElementById("statusFilter");
+const countLabel = document.getElementById("studentCountLabel");
+const headerCountMeta = document.getElementById("headerCountMeta");
 
-  // In-memory list of students
-  var students = [];
+// Modal elements
+const modal = document.getElementById("addStudentModal");
+const openModalBtn = document.getElementById("openAddModalBtn");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const cancelModalBtn = document.getElementById("cancelModalBtn");
+const studentForm = document.getElementById("addStudentForm");
+const modalTitle = document.getElementById("modalTitle");
 
-  // Track editing state: holds the roll number of the student currently being edited, or null
-  var currentEditingRoll = null;
+// Form inputs
+const inputRoll = document.getElementById("studentRoll");
+const inputName = document.getElementById("studentName");
+const inputBranch = document.getElementById("studentBranch");
+const inputEmail = document.getElementById("studentEmail");
+const inputStatus = document.getElementById("studentStatus");
 
-  // Track uploaded Base64 photo data (or existing avatar URL), or empty string
-  var currentAvatarData = '';
+// ==========================================
+// 3. TABLE DISPLAY FUNCTION (READ)
+// ==========================================
+function renderTable() {
+  // Filters ki current value lena
+  const searchValue = searchInput.value.toLowerCase();
+  const selectedBranch = branchFilter.value;
+  const selectedStatus = statusFilter.value;
 
-  /**
-   * Safe HTML string escaping
-   */
-  function escapeHtml(str) {
-    if (!str && str !== 0) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  }
+  tableBody.innerHTML = "";
+  let displayedCount = 0;
 
-  /**
-   * Generate 2-letter initials for student avatar placeholder
-   */
-  function getInitials(name) {
-    if (!name) return 'ST';
-    var parts = name.trim().split(/\s+/);
-    if (parts.length >= 2) {
-      return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
-    }
-    return name.slice(0, 2).toUpperCase();
-  }
+  for (let i = 0; i < students.length; i++) {
+    const student = students[i];
 
-  /**
-   * Get formatted status badge markup
-   */
-  function getStatusBadge(status) {
-    var trimmed = (status || '').trim();
-    if (trimmed === "Dean's List") {
-      return '<span class="badge badge-green badge-deans">Dean\'s List</span>';
-    } else if (trimmed === 'Regular') {
-      return '<span class="badge badge-blue badge-regular">Regular</span>';
-    } else if (trimmed === 'Pending') {
-      return '<span class="badge badge-amber badge-pending">Pending</span>';
-    }
-    return '<span class="badge badge-gray">' + escapeHtml(trimmed) + '</span>';
-  }
+    // Filter conditions check karna
+    const matchSearch = student.name.toLowerCase().includes(searchValue) || 
+                        student.roll.toLowerCase().includes(searchValue) ||
+                        student.branch.toLowerCase().includes(searchValue);
 
-  /**
-   * Load students from localStorage or initialize with defaults
-   */
-  function loadStudents() {
-    var stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === null) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_STUDENTS));
-      return DEFAULT_STUDENTS.slice();
-    }
-    try {
-      var parsed = JSON.parse(stored);
-      if (Array.isArray(parsed)) {
-        return parsed;
+    const matchBranch = selectedBranch === "" || student.branch.includes(selectedBranch);
+    const matchStatus = selectedStatus === "" || student.status === selectedStatus;
+
+    if (matchSearch && matchBranch && matchStatus) {
+      displayedCount++;
+
+      // Status ke according badge class decide karna
+      let badgeClass = "badge-blue badge-regular";
+      if (student.status === "Dean's List") {
+        badgeClass = "badge-green badge-deans";
+      } else if (student.status === "Pending") {
+        badgeClass = "badge-amber badge-pending";
       }
-      return DEFAULT_STUDENTS.slice();
-    } catch (e) {
-      console.error('Error parsing ums_students from localStorage:', e);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_STUDENTS));
-      return DEFAULT_STUDENTS.slice();
+
+      // Default photo agar student ke paas image na ho
+      const studentImage = student.image || "images/student-1.jpg";
+
+      // HTML Row banana
+      const rowHTML = `
+        <tr>
+          <td>${student.roll}</td>
+          <td>
+            <div class="person-cell">
+              <img class="person-thumb" src="${studentImage}" alt="">
+              <span>${student.name}</span>
+            </div>
+          </td>
+          <td>${student.branch}</td>
+          <td>${student.email}</td>
+          <td><span class="badge ${badgeClass}">${student.status}</span></td>
+          <td>
+            <div class="action-buttons">
+              <button type="button" class="btn-edit" onclick="openEditModal('${student.roll}')">Edit</button>
+              <button type="button" class="btn-delete" onclick="deleteStudent('${student.roll}')">Remove</button>
+            </div>
+          </td>
+        </tr>
+      `;
+      tableBody.innerHTML += rowHTML;
     }
   }
 
-  /**
-   * Persist students to localStorage
-   */
-  function persistStudents() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+  // Count text update karna
+  countLabel.innerText = `Showing ${displayedCount} of ${students.length} registered students`;
+  if (headerCountMeta) {
+    headerCountMeta.innerHTML = `Showing <strong>${displayedCount}</strong> of <strong>${students.length}</strong> registered students`;
   }
+}
 
-  /**
-   * Render student avatar (image or initial placeholder)
-   */
-  function renderAvatarHtml(student) {
-    if (student.avatar) {
-      return '<img class="person-thumb" src="' + escapeHtml(student.avatar) + '" alt="' + escapeHtml(student.name) + '" onerror="this.style.display=\'none\'; if(this.nextElementSibling){this.nextElementSibling.style.display=\'inline-flex\';}">' +
-             '<div class="person-thumb person-avatar-placeholder" style="display:none;">' + getInitials(student.name) + '</div>';
-    }
-    return '<div class="person-thumb person-avatar-placeholder">' + getInitials(student.name) + '</div>';
-  }
-
-  /**
-   * Update count indicators on page
-   */
-  function updateCountLabels(showingCount) {
-    var totalCount = students.length;
-    var countLabel = document.getElementById('studentCountLabel');
-    if (countLabel) {
-      countLabel.textContent = 'Showing ' + showingCount + ' of ' + totalCount + ' registered students';
-    }
-
-    var headerCountMeta = document.getElementById('headerCountMeta');
-    if (headerCountMeta) {
-      headerCountMeta.innerHTML = 'Showing <strong>' + showingCount + '</strong> of <strong>' + totalCount + '</strong> registered students';
-    }
-  }
-
-  /**
-   * Render rows in the student records table
-   */
-  function renderTable(list) {
-    var tbody = document.querySelector('.table-wrap table tbody');
-    if (!tbody) return;
-
-    if (!list || list.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 32px 16px; color: #64748b; font-weight: 500;">No student records found matching your filters.</td></tr>';
-      updateCountLabels(0);
-      return;
-    }
-
-    var html = '';
-    for (var i = 0; i < list.length; i++) {
-      var s = list[i];
-      html += '<tr data-roll="' + escapeHtml(s.roll) + '">' +
-        '<td>' + escapeHtml(s.roll) + '</td>' +
-        '<td>' +
-          '<div class="person-cell">' +
-            renderAvatarHtml(s) +
-            '<span>' + escapeHtml(s.name) + '</span>' +
-          '</div>' +
-        '</td>' +
-        '<td>' + escapeHtml(s.branch) + '</td>' +
-        '<td>' + escapeHtml(s.email) + '</td>' +
-        '<td>' + getStatusBadge(s.status) + '</td>' +
-        '<td>' +
-          '<div class="action-buttons">' +
-            '<button type="button" class="btn-edit" data-roll="' + escapeHtml(s.roll) + '" title="Edit student">' +
-              'Edit' +
-            '</button>' +
-            '<button type="button" class="btn-delete" data-roll="' + escapeHtml(s.roll) + '" title="Remove student">' +
-              'Remove' +
-            '</button>' +
-          '</div>' +
-        '</td>' +
-      '</tr>';
-    }
-
-    tbody.innerHTML = html;
-    updateCountLabels(list.length);
-  }
-
-  /**
-   * Filter students based on current controls
-   */
-  function getFilteredStudents() {
-    var searchInput = document.getElementById('studentSearch');
-    var branchSelect = document.getElementById('branchFilter');
-    var statusSelect = document.getElementById('statusFilter');
-
-    var query = searchInput ? searchInput.value.trim().toLowerCase() : '';
-    var branch = branchSelect ? branchSelect.value.trim() : '';
-    var status = statusSelect ? statusSelect.value.trim() : '';
-
-    return students.filter(function (s) {
-      var matchesSearch = !query ||
-        (s.name && s.name.toLowerCase().indexOf(query) !== -1) ||
-        (s.roll && s.roll.toLowerCase().indexOf(query) !== -1) ||
-        (s.branch && s.branch.toLowerCase().indexOf(query) !== -1);
-
-      var matchesBranch = !branch ||
-        (s.branch && s.branch.toUpperCase().indexOf(branch.toUpperCase()) !== -1);
-
-      var matchesStatus = !status ||
-        (s.status && s.status.toLowerCase() === status.toLowerCase());
-
-      return matchesSearch && matchesBranch && matchesStatus;
+// ==========================================
+// 4. DELETE FUNCTION (DELETE)
+// ==========================================
+function deleteStudent(roll) {
+  if (confirm("Are you sure you want to remove this student?")) {
+    // Array se student remove karna
+    students = students.filter(function(s) {
+      return s.roll !== roll;
     });
+
+    // LocalStorage update aur re-render
+    localStorage.setItem("ums_students", JSON.stringify(students));
+    renderTable();
   }
+}
 
-  /**
-   * Re-filter and re-render the view
-   */
-  function refreshView() {
-    var filtered = getFilteredStudents();
-    renderTable(filtered);
-  }
+// ==========================================
+// 5. MODAL OPEN / CLOSE LOGIC
+// ==========================================
+function openAddModal() {
+  editingRollNumber = null;
+  modalTitle.innerText = "Add New Student";
+  studentForm.reset();
+  inputRoll.removeAttribute("readonly");
+  modal.style.display = "flex";
+}
 
-  /**
-   * Setup controls listeners
-   */
-  function initControls() {
-    var searchInput = document.getElementById('studentSearch');
-    var branchSelect = document.getElementById('branchFilter');
-    var statusSelect = document.getElementById('statusFilter');
+function openEditModal(roll) {
+  editingRollNumber = roll;
+  modalTitle.innerText = "Edit Student Details";
 
-    if (searchInput) {
-      searchInput.addEventListener('input', refreshView);
-    }
-    if (branchSelect) {
-      branchSelect.addEventListener('change', refreshView);
-    }
-    if (statusSelect) {
-      statusSelect.addEventListener('change', refreshView);
-    }
-  }
-
-  /**
-   * Helper to set modal avatar preview
-   */
-  function setAvatarPreview(avatarUrl, initials) {
-    var previewImg = document.getElementById('avatarPreview');
-    var initialsEl = document.getElementById('avatarInitialsPreview');
-
-    if (!previewImg || !initialsEl) return;
-
-    if (avatarUrl) {
-      previewImg.src = avatarUrl;
-      previewImg.style.display = 'block';
-      initialsEl.style.display = 'none';
-    } else {
-      previewImg.style.display = 'none';
-      previewImg.src = 'images/avatar-default.png';
-      initialsEl.style.display = 'flex';
-      initialsEl.textContent = initials || 'PIC';
+  // Existing student ka data dhoondna
+  let studentToEdit = null;
+  for (let i = 0; i < students.length; i++) {
+    if (students[i].roll === roll) {
+      studentToEdit = students[i];
+      break;
     }
   }
 
-  /**
-   * Open modal in "Add New Student" mode
-   */
-  function openAddModal() {
-    currentEditingRoll = null;
-    currentAvatarData = '';
-
-    var modal = document.getElementById('addStudentModal');
-    var form = document.getElementById('addStudentForm');
-    var modalTitle = document.getElementById('modalTitle') || (modal ? modal.querySelector('.modal-header h3') : null);
-    var saveBtn = document.getElementById('saveStudentBtn');
-    var rollInput = document.getElementById('studentRoll');
-    var avatarInput = document.getElementById('studentAvatarInput');
-
-    if (!modal) return;
-
-    if (form) {
-      form.reset();
-      form.removeAttribute('data-edit-id');
-    }
-
-    if (avatarInput) {
-      avatarInput.value = '';
-    }
-
-    setAvatarPreview('', 'PIC');
-
-    if (modalTitle) {
-      modalTitle.textContent = 'Add New Student';
-    }
-    if (saveBtn) {
-      saveBtn.textContent = 'Save Student';
-    }
-
-    if (rollInput) {
-      rollInput.readOnly = false;
-      rollInput.disabled = false;
-    }
-
-    modal.classList.add('active');
-    modal.setAttribute('aria-hidden', 'false');
-
-    if (rollInput) {
-      rollInput.focus();
-    }
+  if (studentToEdit) {
+    inputRoll.value = studentToEdit.roll;
+    inputRoll.setAttribute("readonly", true); // Roll no primary key hai, edit nahi hone dena
+    inputName.value = studentToEdit.name;
+    inputBranch.value = studentToEdit.branch;
+    inputEmail.value = studentToEdit.email;
+    inputStatus.value = studentToEdit.status;
+    modal.style.display = "flex";
   }
+}
 
-  /**
-   * Open modal in "Edit Student Details" mode
-   */
-  function openEditModal(roll) {
-    var student = null;
-    for (var i = 0; i < students.length; i++) {
-      if (students[i].roll === roll) {
-        student = students[i];
+function closeModal() {
+  modal.style.display = "none";
+}
+
+// ==========================================
+// 6. FORM SUBMIT (CREATE / UPDATE)
+// ==========================================
+studentForm.addEventListener("submit", function(event) {
+  event.preventDefault(); // Page reload hone se rokna
+
+  if (editingRollNumber) {
+    // EDIT MODE: Existing student update karna
+    for (let i = 0; i < students.length; i++) {
+      if (students[i].roll === editingRollNumber) {
+        students[i].name = inputName.value;
+        students[i].branch = inputBranch.value;
+        students[i].email = inputEmail.value;
+        students[i].status = inputStatus.value;
         break;
       }
     }
-    if (!student) return;
-
-    currentEditingRoll = student.roll;
-
-    var modal = document.getElementById('addStudentModal');
-    var form = document.getElementById('addStudentForm');
-    var modalTitle = document.getElementById('modalTitle') || (modal ? modal.querySelector('.modal-header h3') : null);
-    var saveBtn = document.getElementById('saveStudentBtn');
-
-    var rollInput = document.getElementById('studentRoll');
-    var nameInput = document.getElementById('studentName');
-    var branchInput = document.getElementById('studentBranch');
-    var emailInput = document.getElementById('studentEmail');
-    var statusInput = document.getElementById('studentStatus');
-    var avatarInput = document.getElementById('studentAvatarInput');
-
-    if (form) {
-      form.setAttribute('data-edit-id', student.roll);
-    }
-
-    if (avatarInput) {
-      avatarInput.value = '';
-    }
-
-    // Pre-fill existing avatar or fallback to initials
-    if (student.avatar) {
-      currentAvatarData = student.avatar;
-      setAvatarPreview(student.avatar);
-    } else {
-      currentAvatarData = '';
-      setAvatarPreview('', getInitials(student.name));
-    }
-
-    if (modalTitle) {
-      modalTitle.textContent = 'Edit Student Details';
-    }
-    if (saveBtn) {
-      saveBtn.textContent = 'Save Changes';
-    }
-
-    if (rollInput) {
-      rollInput.value = student.roll;
-      rollInput.readOnly = true;
-    }
-    if (nameInput) {
-      nameInput.value = student.name;
-    }
-    if (branchInput) {
-      branchInput.value = student.branch;
-    }
-    if (emailInput) {
-      emailInput.value = student.email;
-    }
-    if (statusInput) {
-      statusInput.value = student.status;
-    }
-
-    if (modal) {
-      modal.classList.add('active');
-      modal.setAttribute('aria-hidden', 'false');
-    }
-
-    if (nameInput) {
-      nameInput.focus();
-    }
-  }
-
-  /**
-   * Close modal and reset state to default Add mode
-   */
-  function closeModal() {
-    var modal = document.getElementById('addStudentModal');
-    var form = document.getElementById('addStudentForm');
-    var modalTitle = document.getElementById('modalTitle') || (modal ? modal.querySelector('.modal-header h3') : null);
-    var saveBtn = document.getElementById('saveStudentBtn');
-    var rollInput = document.getElementById('studentRoll');
-    var avatarInput = document.getElementById('studentAvatarInput');
-
-    if (modal) {
-      modal.classList.remove('active');
-      modal.setAttribute('aria-hidden', 'true');
-    }
-
-    if (form) {
-      form.reset();
-      form.removeAttribute('data-edit-id');
-    }
-
-    if (avatarInput) {
-      avatarInput.value = '';
-    }
-
-    currentAvatarData = '';
-    setAvatarPreview('', 'PIC');
-
-    if (modalTitle) {
-      modalTitle.textContent = 'Add New Student';
-    }
-    if (saveBtn) {
-      saveBtn.textContent = 'Save Student';
-    }
-
-    if (rollInput) {
-      rollInput.readOnly = false;
-      rollInput.disabled = false;
-    }
-
-    currentEditingRoll = null;
-  }
-
-  /**
-   * Setup row actions (Delete & Edit) via delegated click
-   */
-  function initTableActions() {
-    var tbody = document.querySelector('.table-wrap table tbody');
-    if (!tbody) return;
-
-    tbody.addEventListener('click', function (e) {
-      // Delete handler
-      var deleteBtn = e.target.closest('.btn-delete');
-      if (deleteBtn) {
-        var rollToDelete = deleteBtn.getAttribute('data-roll');
-        if (!rollToDelete) return;
-
-        students = students.filter(function (s) {
-          return s.roll !== rollToDelete;
-        });
-
-        persistStudents();
-        refreshView();
+  } else {
+    // ADD MODE: Check karo duplicate roll number na ho
+    for (let i = 0; i < students.length; i++) {
+      if (students[i].roll.toLowerCase() === inputRoll.value.toLowerCase()) {
+        alert("A student with this Roll Number already exists!");
         return;
       }
+    }
 
-      // Edit handler
-      var editBtn = e.target.closest('.btn-edit');
-      if (editBtn) {
-        var rollToEdit = editBtn.getAttribute('data-roll');
-        if (!rollToEdit) return;
-        openEditModal(rollToEdit);
-      }
-    });
+    // Naya student object banana
+    const newStudent = {
+      roll: inputRoll.value,
+      name: inputName.value,
+      image: "images/student-2.jpg", // Default placeholder image
+      branch: inputBranch.value,
+      email: inputEmail.value,
+      status: inputStatus.value
+    };
+
+    students.push(newStudent);
   }
 
-  /**
-   * Setup Modal dialog listeners and student submission (Add / Edit)
-   */
-  function initModal() {
-    var modal = document.getElementById('addStudentModal');
-    var openBtn = document.getElementById('openAddModalBtn');
-    var closeBtn = document.getElementById('closeModalBtn');
-    var cancelBtn = document.getElementById('cancelModalBtn');
-    var form = document.getElementById('addStudentForm');
-    var avatarInput = document.getElementById('studentAvatarInput');
-    var nameInput = document.getElementById('studentName');
+  // LocalStorage save karo aur UI update karo
+  localStorage.setItem("ums_students", JSON.stringify(students));
+  closeModal();
+  renderTable();
+});
 
-    if (!modal) return;
+// ==========================================
+// 7. EVENT LISTENERS
+// ==========================================
+openModalBtn.addEventListener("click", openAddModal);
+closeModalBtn.addEventListener("click", closeModal);
+cancelModalBtn.addEventListener("click", closeModal);
 
-    // Handle avatar file selection & live conversion to Base64
-    if (avatarInput) {
-      avatarInput.addEventListener('change', function (e) {
-        var file = e.target.files && e.target.files[0];
-        if (!file) return;
+// Live search aur filter listeners
+searchInput.addEventListener("input", renderTable);
+branchFilter.addEventListener("change", renderTable);
+statusFilter.addEventListener("change", renderTable);
 
-        if (file.type && !file.type.match(/^image\//)) {
-          alert('Please select a valid image file.');
-          avatarInput.value = '';
-          return;
-        }
-
-        var reader = new FileReader();
-        reader.onload = function (event) {
-          currentAvatarData = event.target.result;
-          setAvatarPreview(currentAvatarData);
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-
-    // Dynamic initials preview when typing full name in case no custom photo is chosen
-    if (nameInput) {
-      nameInput.addEventListener('input', function () {
-        if (!currentAvatarData) {
-          setAvatarPreview('', getInitials(nameInput.value) || 'PIC');
-        }
-      });
-    }
-
-    if (openBtn) {
-      openBtn.addEventListener('click', openAddModal);
-    }
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closeModal);
-    }
-    if (cancelBtn) {
-      cancelBtn.addEventListener('click', closeModal);
-    }
-
-    modal.addEventListener('click', function (e) {
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && modal.classList.contains('active')) {
-        closeModal();
-      }
-    });
-
-    if (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        var rollEl = document.getElementById('studentRoll');
-        var nameEl = document.getElementById('studentName');
-        var branchEl = document.getElementById('studentBranch');
-        var emailEl = document.getElementById('studentEmail');
-        var statusEl = document.getElementById('studentStatus');
-
-        var roll = rollEl ? rollEl.value.trim() : '';
-        var name = nameEl ? nameEl.value.trim() : '';
-        var branch = branchEl ? branchEl.value.trim() : '';
-        var email = emailEl ? emailEl.value.trim() : '';
-        var status = statusEl ? statusEl.value.trim() : 'Regular';
-
-        if (!name || !branch || !email || (!currentEditingRoll && !roll)) {
-          alert('Please fill out all required fields.');
-          return;
-        }
-
-        // EDIT MODE: Update existing student
-        if (currentEditingRoll) {
-          var updated = false;
-          for (var i = 0; i < students.length; i++) {
-            if (students[i].roll === currentEditingRoll) {
-              students[i].name = name;
-              students[i].branch = branch;
-              students[i].email = email;
-              students[i].status = status;
-              // If user selected a new photo, update it; otherwise retain existing avatar
-              if (currentAvatarData) {
-                students[i].avatar = currentAvatarData;
-              }
-              updated = true;
-              break;
-            }
-          }
-
-          if (updated) {
-            persistStudents();
-            closeModal();
-            refreshView();
-          }
-          return;
-        }
-
-        // ADD MODE: Check for duplicate roll number
-        var duplicate = students.some(function (s) {
-          return s.roll && s.roll.toLowerCase() === roll.toLowerCase();
-        });
-
-        if (duplicate) {
-          alert('A student with Roll Number "' + roll + '" already exists.');
-          return;
-        }
-
-        var newStudent = {
-          roll: roll,
-          name: name,
-          branch: branch,
-          email: email,
-          status: status,
-          avatar: currentAvatarData || ''
-        };
-
-        students.push(newStudent);
-        persistStudents();
-        closeModal();
-        refreshView();
-      });
-    }
-  }
-
-  /**
-   * Listen for multi-tab storage sync
-   */
-  window.addEventListener('storage', function (e) {
-    if (e.key === STORAGE_KEY) {
-      students = loadStudents();
-      refreshView();
-    }
-  });
-
-  /**
-   * Initialization
-   */
-  function init() {
-    students = loadStudents();
-    initControls();
-    initTableActions();
-    initModal();
-    refreshView();
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
+// Initial call jab page load ho
+renderTable();
