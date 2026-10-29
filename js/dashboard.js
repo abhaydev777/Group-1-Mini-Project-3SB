@@ -1,4 +1,4 @@
-// 1. Array of default students (initial count agar storage empty ho)
+// 1. Array of default students (fallback records when storage is empty)
 const defaultStudents = [
   { roll: "CSE21B001" },
   { roll: "CSE21B014" },
@@ -8,15 +8,15 @@ const defaultStudents = [
   { roll: "CSE23B045" }
 ];
 
-// 2. LocalStorage se students data fetch karna
+// 2. Retrieve student records from localStorage
 let storedStudents = JSON.parse(localStorage.getItem("ums_students"));
 
-// Agar localStorage me data nahi hai, toh default count use karenge
+// Fall back to default student records if localStorage is uninitialized
 if (!storedStudents) {
   storedStudents = defaultStudents;
 }
 
-// 3. Metric card par total count show karna
+// 3. Update the total student count on the dashboard metric card
 const countElement = document.getElementById("totalStudentsCount");
 if (countElement) {
   countElement.innerText = storedStudents.length;

@@ -1,5 +1,5 @@
 // ==========================================
-// 1. DEFAULT DATA (Jab pehli baar page khule)
+// 1. DEFAULT DATA (Fallback records when page is opened for the first time)
 // ==========================================
 const initialStudents = [
   { roll: "CSE21B001", name: "Ananya Sharma", image: "images/student-1.jpg", branch: "CSE - Sem 6", email: "ananya.sharma@uni.edu", status: "Dean's List" },
@@ -10,18 +10,18 @@ const initialStudents = [
   { roll: "CSE23B045", name: "Vikram Singh", image: "images/student-6.jpg", branch: "CSE - Sem 2", email: "vikram.singh@uni.edu", status: "Regular" }
 ];
 
-// LocalStorage check karo: agar data hai toh uthao, warna initial data daalo
+// Check localStorage: load existing records or initialize with default data
 let students = JSON.parse(localStorage.getItem("ums_students"));
 if (!students) {
   students = initialStudents;
   localStorage.setItem("ums_students", JSON.stringify(students));
 }
 
-// Edit tracking ke liye variable (null = Add mode, string = Edit mode)
+// State variable for tracking edits (null = Add mode, roll string = Edit mode)
 let editingRollNumber = null;
 
 // ==========================================
-// 2. DOM ELEMENTS SELECT KARNA
+// 2. DOM ELEMENT SELECTORS
 // ==========================================
 const tableBody = document.querySelector("tbody");
 const searchInput = document.getElementById("studentSearch");
@@ -49,7 +49,7 @@ const inputStatus = document.getElementById("studentStatus");
 // 3. TABLE DISPLAY FUNCTION (READ)
 // ==========================================
 function renderTable() {
-  // Filters ki current value lena
+  // Retrieve current values from search and filter inputs
   const searchValue = searchInput.value.toLowerCase();
   const selectedBranch = branchFilter.value;
   const selectedStatus = statusFilter.value;
@@ -60,7 +60,7 @@ function renderTable() {
   for (let i = 0; i < students.length; i++) {
     const student = students[i];
 
-    // Filter conditions check karna
+    // Evaluate filter criteria against student records
     const matchSearch = student.name.toLowerCase().includes(searchValue) || 
                         student.roll.toLowerCase().includes(searchValue) ||
                         student.branch.toLowerCase().includes(searchValue);
@@ -71,7 +71,7 @@ function renderTable() {
     if (matchSearch && matchBranch && matchStatus) {
       displayedCount++;
 
-      // Status ke according badge class decide karna
+      // Determine badge styling classes based on academic standing
       let badgeClass = "badge-blue badge-regular";
       if (student.status === "Dean's List") {
         badgeClass = "badge-green badge-deans";
@@ -79,10 +79,10 @@ function renderTable() {
         badgeClass = "badge-amber badge-pending";
       }
 
-      // Default photo agar student ke paas image na ho
+      // Fallback avatar image if student has no profile picture
       const studentImage = student.image || "images/student-1.jpg";
 
-      // HTML Row banana
+      // Construct table row HTML structure
       const rowHTML = `
         <tr>
           <td>${student.roll}</td>
@@ -107,7 +107,7 @@ function renderTable() {
     }
   }
 
-  // Count text update karna
+  // Update showing count labels dynamically
   countLabel.innerText = `Showing ${displayedCount} of ${students.length} registered students`;
   if (headerCountMeta) {
     headerCountMeta.innerHTML = `Showing <strong>${displayedCount}</strong> of <strong>${students.length}</strong> registered students`;
@@ -119,12 +119,12 @@ function renderTable() {
 // ==========================================
 function deleteStudent(roll) {
   if (confirm("Are you sure you want to remove this student?")) {
-    // Array se student remove karna
+    // Filter out and remove the selected student from the array
     students = students.filter(function(s) {
       return s.roll !== roll;
     });
 
-    // LocalStorage update aur re-render
+    // Update localStorage and refresh the table display
     localStorage.setItem("ums_students", JSON.stringify(students));
     renderTable();
   }
@@ -145,7 +145,7 @@ function openEditModal(roll) {
   editingRollNumber = roll;
   modalTitle.innerText = "Edit Student Details";
 
-  // Existing student ka data dhoondna
+  // Locate the existing student record to pre-populate form fields
   let studentToEdit = null;
   for (let i = 0; i < students.length; i++) {
     if (students[i].roll === roll) {
@@ -156,7 +156,7 @@ function openEditModal(roll) {
 
   if (studentToEdit) {
     inputRoll.value = studentToEdit.roll;
-    inputRoll.setAttribute("readonly", true); // Roll no primary key hai, edit nahi hone dena
+    inputRoll.setAttribute("readonly", true); // Roll number serves as unique primary key, lock as readonly during edit
     inputName.value = studentToEdit.name;
     inputBranch.value = studentToEdit.branch;
     inputEmail.value = studentToEdit.email;
@@ -170,13 +170,13 @@ function closeModal() {
 }
 
 // ==========================================
-// 6. FORM SUBMIT (CREATE / UPDATE)
+// 6. FORM SUBMISSION HANDLER (CREATE / UPDATE)
 // ==========================================
 studentForm.addEventListener("submit", function(event) {
-  event.preventDefault(); // Page reload hone se rokna
+  event.preventDefault(); // Prevent default browser form submission and page reload
 
   if (editingRollNumber) {
-    // EDIT MODE: Existing student update karna
+    // EDIT MODE: Update existing student record matching active roll number
     for (let i = 0; i < students.length; i++) {
       if (students[i].roll === editingRollNumber) {
         students[i].name = inputName.value;
@@ -187,7 +187,7 @@ studentForm.addEventListener("submit", function(event) {
       }
     }
   } else {
-    // ADD MODE: Check karo duplicate roll number na ho
+    // ADD MODE: Validate that roll number is unique to avoid duplicates
     for (let i = 0; i < students.length; i++) {
       if (students[i].roll.toLowerCase() === inputRoll.value.toLowerCase()) {
         alert("A student with this Roll Number already exists!");
@@ -195,7 +195,7 @@ studentForm.addEventListener("submit", function(event) {
       }
     }
 
-    // Naya student object banana
+    // Construct new student record object
     const newStudent = {
       roll: inputRoll.value,
       name: inputName.value,
@@ -208,7 +208,7 @@ studentForm.addEventListener("submit", function(event) {
     students.push(newStudent);
   }
 
-  // LocalStorage save karo aur UI update karo
+  // Persist updated records to localStorage and re-render UI
   localStorage.setItem("ums_students", JSON.stringify(students));
   closeModal();
   renderTable();
@@ -221,10 +221,10 @@ openModalBtn.addEventListener("click", openAddModal);
 closeModalBtn.addEventListener("click", closeModal);
 cancelModalBtn.addEventListener("click", closeModal);
 
-// Live search aur filter listeners
+// Real-time search and filter event listeners
 searchInput.addEventListener("input", renderTable);
 branchFilter.addEventListener("change", renderTable);
 statusFilter.addEventListener("change", renderTable);
 
-// Initial call jab page load ho
+// Initial table render on page load
 renderTable();
