@@ -65,6 +65,38 @@
         </div>
       </section>
 
+      <section class="metrics metrics-3" aria-label="Attendance statistics">
+        <article class="metric-card">
+          <span class="accent"></span>
+          <p class="label">Total Students</p>
+          <p class="value" id="totalStudentsStat">6</p>
+        </article>
+        <article class="metric-card">
+          <span class="accent mint"></span>
+          <p class="label">Eligible Students</p>
+          <p class="value" id="eligibleStudentsStat">4</p>
+        </article>
+        <article class="metric-card">
+          <span class="accent slate"></span>
+          <p class="label">Below 75% Attendance</p>
+          <p class="value" id="shortageStudentsStat">2</p>
+        </article>
+      </section>
+
+      <div class="filter-bar">
+        <div class="filter-group">
+          <input type="text" id="attendanceSearch" placeholder="Search by student name or roll no...">
+          <select id="attendanceStatusFilter">
+            <option value="">All Status</option>
+            <option value="eligible">Eligible</option>
+            <option value="shortage">Shortage Alert</option>
+          </select>
+        </div>
+        <div class="filter-actions">
+          <span id="attendanceCountLabel" class="student-count-label">Showing 6 of 6 students</span>
+        </div>
+      </div>
+
       <div class="table-wrap">
         <table>
           <thead>
@@ -75,6 +107,7 @@
               <th scope="col">Classes Attended</th>
               <th scope="col">Attendance %</th>
               <th scope="col">Eligibility Status</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -90,6 +123,11 @@
               <td>46</td>
               <td>95.8%</td>
               <td><span class="badge badge-green">Eligible</span></td>
+              <td>
+                <div class="action-buttons">
+                  <button type="button" class="btn-edit" data-roll="CSE21B001" title="Update attendance">Update</button>
+                </div>
+              </td>
             </tr>
             <tr>
               <td>CSE21B014</td>
@@ -103,6 +141,11 @@
               <td>41</td>
               <td>85.4%</td>
               <td><span class="badge badge-green">Eligible</span></td>
+              <td>
+                <div class="action-buttons">
+                  <button type="button" class="btn-edit" data-roll="CSE21B014" title="Update attendance">Update</button>
+                </div>
+              </td>
             </tr>
             <tr>
               <td>ECE22B008</td>
@@ -116,6 +159,11 @@
               <td>39</td>
               <td>86.7%</td>
               <td><span class="badge badge-green">Eligible</span></td>
+              <td>
+                <div class="action-buttons">
+                  <button type="button" class="btn-edit" data-roll="ECE22B008" title="Update attendance">Update</button>
+                </div>
+              </td>
             </tr>
             <tr>
               <td>CSE22B032</td>
@@ -129,6 +177,11 @@
               <td>33</td>
               <td>68.8%</td>
               <td><span class="badge badge-red">Shortage Alert</span></td>
+              <td>
+                <div class="action-buttons">
+                  <button type="button" class="btn-edit" data-roll="CSE22B032" title="Update attendance">Update</button>
+                </div>
+              </td>
             </tr>
             <tr>
               <td>IT21B019</td>
@@ -142,6 +195,11 @@
               <td>43</td>
               <td>93.5%</td>
               <td><span class="badge badge-green">Eligible</span></td>
+              <td>
+                <div class="action-buttons">
+                  <button type="button" class="btn-edit" data-roll="IT21B019" title="Update attendance">Update</button>
+                </div>
+              </td>
             </tr>
             <tr>
               <td>CSE23B045</td>
@@ -155,6 +213,11 @@
               <td>30</td>
               <td>71.4%</td>
               <td><span class="badge badge-red">Shortage Alert</span></td>
+              <td>
+                <div class="action-buttons">
+                  <button type="button" class="btn-edit" data-roll="CSE23B045" title="Update attendance">Update</button>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -180,5 +243,38 @@
     </div>
   </div>
 
+  <div id="attendanceModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Update Attendance</h3>
+        <button type="button" class="modal-close-btn" id="closeAttendanceModalBtn" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="attendanceForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="attendanceRoll">Roll Number</label>
+            <input type="text" id="attendanceRoll" readonly>
+          </div>
+          <div class="form-group">
+            <label for="attendanceName">Student Name</label>
+            <input type="text" id="attendanceName" readonly>
+          </div>
+          <div class="form-group">
+            <label for="classesHeld">Total Classes Held</label>
+            <input type="number" id="classesHeld" min="1" step="1" required placeholder="e.g. 48">
+          </div>
+          <div class="form-group">
+            <label for="classesAttended">Classes Attended</label>
+            <input type="number" id="classesAttended" min="0" step="1" required placeholder="e.g. 40">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelAttendanceModalBtn">Cancel / Close</button>
+          <button type="submit" class="btn btn-primary" id="saveAttendanceBtn">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="js/attendance.js"></script>
 </body>
 </html>
