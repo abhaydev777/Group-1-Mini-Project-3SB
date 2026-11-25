@@ -172,7 +172,7 @@ function closeModal() {
 // ==========================================
 // 6. FORM SUBMISSION HANDLER (CREATE / UPDATE)
 // ==========================================
-studentForm.addEventListener("submit", function(event) {
+studentForm.addEventListe  ner("submit", function(event) {
   event.preventDefault(); // Prevent default browser form submission and page reload
 
   if (editingRollNumber) {
