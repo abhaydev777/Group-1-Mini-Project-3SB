@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,170 +9,185 @@
 </head>
 <body>
 
-  <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle" aria-hidden="true">
-  <label for="sidebar-toggle" class="sidebar-backdrop" aria-label="Close menu"></label>
+<input type="checkbox" id="sidebar-toggle" class="sidebar-toggle" aria-hidden="true">
+<label for="sidebar-toggle" class="sidebar-backdrop" aria-label="Close menu"></label>
 
-  <div class="app-layout">
-    <aside class="sidebar" aria-label="Sidebar navigation">
-      <div class="sidebar-brand">
-        <img src="images/logo.png" alt="">
-        <span>Admin</span>
-      </div>
-      <nav class="sidebar-nav">
-        <a href="index.html">Home</a>
-        <a href="students.html">Students</a>
-        <a href="faculty.html">Faculty</a>
-        <a href="courses.html">Courses</a>
-        <a href="attendance.html">Attendance</a>
-        <a href="exams.html">Exams</a>
-        <a href="fees.html" class="active">Fees</a>
-      </nav>
-    </aside>
+<div class="app-layout">
 
-    <div class="app-main">
-      <header class="topbar">
-        <label for="sidebar-toggle" class="menu-toggle" aria-label="Open menu">&#9776;</label>
-        <a href="index.html" class="brand">
-          <img src="images/logo.png" alt="University logo" class="brand-mark">
-          <span>University Management</span>
-        </a>
-      </header>
+  <aside class="sidebar" aria-label="Sidebar navigation">
+    <div class="sidebar-brand">
+      <img src="images/logo.png" alt="University logo">
+      <span>Admin</span>
+    </div>
 
+    <nav class="sidebar-nav">
+      <a href="index.html">Home</a>
+      <a href="students.html">Students</a>
+      <a href="faculty.html">Faculty</a>
+      <a href="courses.html">Courses</a>
+      <a href="attendance.html">Attendance</a>
+      <a href="exams.html">Exams</a>
+      <a href="fees.html" class="active">Fees</a>
+    </nav>
+  </aside>
 
-  <main class="page-content">
-    <div class="container">
+  <div class="app-main">
 
-      <header class="page-header">
-        <h1>Fees &amp; Accounts Portal</h1>
-        <p class="subtitle">
-          Tuition breakdown, recurring installment records, hostel charges, and clearance status.
-        </p>
-        <p class="meta">Account holder: <strong>Ananya Sharma</strong> · Roll <strong>CSE21B001</strong></p>
-      </header>
+    <header class="topbar">
+      <label for="sidebar-toggle" class="menu-toggle" aria-label="Open menu">&#9776;</label>
+      <a href="index.html" class="brand">
+        <img src="images/logo.png" alt="University logo" class="brand-mark">
+        <span>University Management</span>
+      </a>
+    </header>
 
-      <section class="metrics metrics-3" aria-label="Fee summary">
-        <article class="metric-card">
-          <span class="accent"></span>
-          <p class="label">Total Annual Fees</p>
-          <p class="value">₹1,45,000</p>
-          <p class="metric-note">AY 2025-26 · Tuition + Hostel + Lab</p>
-        </article>
-        <article class="metric-card">
-          <span class="accent mint"></span>
-          <p class="label">Paid Amount</p>
-          <p class="value">₹1,45,000</p>
-          <p class="metric-note"><span class="badge badge-green">No Pending Dues</span></p>
-        </article>
-        <article class="metric-card">
-          <span class="accent indigo"></span>
-          <p class="label">Accounts Clearance</p>
-          <p class="value value-sm">Full Clearance Granted</p>
-          <p class="metric-note"><span class="badge badge-blue">Eligible for Exams</span></p>
-        </article>
-      </section>
+    <main class="page-content">
+      <div class="container">
 
-      <section>
-        <h2 class="section-title">Fee Transaction History</h2>
-        <p class="section-desc">
-          Receipts generated for tuition, laboratory, library, and hostel / mess installments
-          during the current academic year.
-        </p>
-
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Receipt ID</th>
-                <th scope="col">Description</th>
-                <th scope="col">Payment Date</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Payment Mode</th>
-                <th scope="col">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>RCPT-2025-1184</td>
-                <td>Odd Sem Tuition (Sem 6)</td>
-                <td>Aug 12, 2025</td>
-                <td>₹70,000</td>
-                <td>Net Banking</td>
-                <td><span class="badge badge-green">Paid</span></td>
-              </tr>
-              <tr>
-                <td>RCPT-2025-1249</td>
-                <td>Lab &amp; Library Fee</td>
-                <td>Aug 14, 2025</td>
-                <td>₹8,500</td>
-                <td>UPI</td>
-                <td><span class="badge badge-green">Paid</span></td>
-              </tr>
-              <tr>
-                <td>RCPT-2025-1310</td>
-                <td>Hostel / Mess Installment 1</td>
-                <td>Aug 20, 2025</td>
-                <td>₹32,000</td>
-                <td>UPI</td>
-                <td><span class="badge badge-green">Paid</span></td>
-              </tr>
-              <tr>
-                <td>RCPT-2025-1488</td>
-                <td>Hostel / Mess Installment 2</td>
-                <td>Oct 05, 2025</td>
-                <td>₹32,000</td>
-                <td>Net Banking</td>
-                <td><span class="badge badge-green">Paid</span></td>
-              </tr>
-              <tr>
-                <td>RCPT-2025-1562</td>
-                <td>Examination &amp; Form Fee</td>
-                <td>Oct 22, 2025</td>
-                <td>₹2,500</td>
-                <td>DD</td>
-                <td><span class="badge badge-green">Paid</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="action-bar" aria-label="Fee documents">
-        <div class="action-bar-copy">
-          <h2>Documents &amp; Downloads</h2>
-          <p>
-            Clearance certificate and consolidated receipts are available once all dues
-            are settled. Buttons below are UI mockups for the demo portal.
+        <header class="page-header">
+          <h1>Fees &amp; Accounts Portal</h1>
+          <p class="subtitle">
+            Search students and manage their fee records and receipts.
           </p>
-        </div>
-        <div class="action-bar-actions">
-          <button type="button" class="btn btn-primary btn-static" disabled>
-            Download Fee Clearance Certificate (PDF)
-          </button>
-          <button type="button" class="btn btn-secondary btn-static" disabled>
-            Print All Receipts
-          </button>
-        </div>
-      </section>
+        </header>
 
-    </div>
-  </main>
+        
+        <section style="background:#fff;padding:22px;border-radius:12px;margin-bottom:24px;border:1px solid #e0e5ef;">
+          <h2 style="margin-top:0;">Search Student</h2>
 
-  <footer class="footer">
-    <div class="container">
-      <div>
-        <h4>Department of Computer Science &amp; Engineering</h4>
-        <p>University Management System - Academic Year 2025-26</p>
+          <form id="studentSearchForm" style="display:flex;gap:12px;flex-wrap:wrap;">
+            <input
+              type="search"
+              id="studentSearch"
+              list="studentSuggestions"
+              placeholder="Enter student name or roll number"
+              aria-label="Search by student name or roll number"
+              autocomplete="off"
+              required
+              style="flex:1;min-width:220px;padding:12px;border:1px solid #ccd3e0;border-radius:8px;"
+            >
+
+            <datalist id="studentSuggestions"></datalist>
+
+            <button type="submit" class="btn btn-primary">
+              Search Student
+            </button>
+          </form>
+
+          <p id="searchMessage" role="status" aria-live="polite" style="margin-bottom:0;"></p>
+        </section>
+
+        
+        <header class="page-header">
+          <h2 id="selectedStudentName">Ananya Sharma</h2>
+          <p class="meta">
+            Roll Number: <strong id="selectedStudentRoll">CSE21B001</strong>
+            · Academic Year: <strong id="selectedAcademicYear">2026-27</strong>
+          </p>
+        </header>
+
+        
+        <section class="metrics metrics-3" aria-label="Fee summary">
+
+          <article class="metric-card">
+            <span class="accent"></span>
+            <p class="label">Total Annual Fees</p>
+            <p class="value" id="totalFees">₹1,45,000</p>
+            <p class="metric-note">Academic Year 2026-27</p>
+          </article>
+
+          <article class="metric-card">
+            <span class="accent mint"></span>
+            <p class="label">Paid Amount</p>
+            <p class="value" id="paidAmount">₹1,45,000</p>
+            <p class="metric-note">
+              <span class="badge badge-green" id="duesStatus">No Pending Dues</span>
+            </p>
+          </article>
+
+          <article class="metric-card">
+            <span class="accent indigo"></span>
+            <p class="label">Accounts Clearance</p>
+            <p class="value value-sm" id="clearanceStatus">Full Clearance Granted</p>
+            <p class="metric-note">
+              <span class="badge badge-blue" id="examEligibility">Eligible for Exams</span>
+            </p>
+          </article>
+
+        </section>
+
+        
+        <section>
+          <h2 class="section-title">Fee Transaction History</h2>
+
+          <p class="section-desc">
+            Payment records for the selected student.
+          </p>
+
+          <div class="table-wrap">
+            <table id="feeTable">
+              <thead>
+                <tr>
+                  <th scope="col">Receipt ID</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Payment Date</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Payment Mode</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody id="feeTableBody"></tbody>
+            </table>
+          </div>
+
+          <p id="noTransactions" hidden>No fee transactions found for this student.</p>
+        </section>
+
+        
+        <section class="action-bar" aria-label="Fee documents">
+          <div class="action-bar-copy">
+            <h2>Documents &amp; Downloads</h2>
+            <p>
+              Download the selected student's fee clearance statement
+              or all recorded fee receipts.
+            </p>
+          </div>
+
+          <div class="action-bar-actions">
+            <button type="button" class="btn btn-primary" id="downloadCertificate">
+              Download Fee Clearance Certificate (PDF)
+            </button>
+
+            <button type="button" class="btn btn-secondary" id="downloadReceipts">
+              Download All Receipts (PDF)
+            </button>
+          </div>
+        </section>
+
       </div>
-      <div class="footer-meta">
-        <h4>Group Submission</h4>
-        <p>Full-Stack Mini Project - Team 01</p>
-        <p>Static frontend demo for academic evaluation</p>
-      </div>
-    </div>
-  </footer>
+    </main>
 
-    </div>
+    <footer class="footer">
+      <div class="container">
+        <div>
+          <h4>Department of Computer Science &amp; Engineering</h4>
+          <p>University Management System - Academic Year 2026-27</p>
+        </div>
+
+        <div class="footer-right">
+    <h4>Copyright &copy; 2026</h4>
+    <p>University Management System</p>
+    <p>All Rights Reserved.</p>
+
+      </div>
+    </footer>
+
   </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="js/fees.js"></script>
 
 </body>
 </html>
